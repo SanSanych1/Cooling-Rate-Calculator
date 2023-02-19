@@ -1,10 +1,13 @@
-﻿namespace Cooling_Rate_Calculation;
+﻿using Cooling_Rate_Calculator.ViewModels;
+
+namespace Cooling_Rate_Calculation;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
+	public MainPage(MainViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext = vm;
 	}
 }
 

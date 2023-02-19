@@ -1,12 +1,189 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:groupBoxView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-               x:Class="Cooling_Rate_Calculation.MainPage">
-    <ScrollView BackgroundColor="White">
-        <VerticalStackLayout Padding="20"
-                             VerticalOptions="Start">
-            
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:groupBoxView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:Class="Cooling_Rate_Calculation.MainPage"
+             xmlns:viewModel="clr-namespace:Cooling_Rate_Calculator.ViewModels"
+             x:DataType="viewModel:MainViewModel"
+             Title="{Binding Title}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <groupBoxView:SfTextInputLayout Grid.Column="0"
+                                                Grid.Row="0"
+                                                Hint="Углерод"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="1"
+                                                Grid.Row="0"
+                                                Hint="Никель"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Niccolum}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="2"
+                                                Grid.Row="0"
+                                                Hint="Кобальт"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Cobaltum}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="0"
+                                                Grid.Row="1"
+                                                Hint="Медь"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Cuprum}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="1"
+                                                Grid.Row="1"
+                                                Hint="Вольфрам"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Wolframium}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="2"
+                                                Grid.Row="1"
+                                                Hint="Марганец"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Manganum}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="0"
+                                                Grid.Row="2"
+                                                Hint="Кремний"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Silicium}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="1"
+                                                Grid.Row="2"
+                                                Hint="Аллюминий"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Aluminium}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="2"
+                                                Grid.Row="2"
+                                                Hint="Хром"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Chromium}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="0"
+                                                Grid.Row="3"
+                                                Hint="Ванадий"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Vanadium}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="1"
+                                                Grid.Row="3"
+                                                Hint="Титан"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Titanium}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <groupBoxView:SfTextInputLayout Grid.Column="2"
+                                                Grid.Row="3"
+                                                Hint="Молибден"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                    <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                    </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <Entry Text="{Binding Molybdaenum}" MaxLength="10"/>
+                </groupBoxView:SfTextInputLayout>
+                <FlexLayout Grid.Row="4"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                    <groupBoxView:SfTextInputLayout 
+                                                Hint="Ниобий"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                            <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                                <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                            </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Text="{Binding Niobium}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                    <groupBoxView:SfTextInputLayout 
+                                                Hint="Цирконий"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Placeholder = "Zn" Text="{Binding Zirconium}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                </FlexLayout>
+            </Grid>
+            <Button Text="Очистить поля" Command="{Binding ClearFieldsCommand}" ></Button>
+            <Button Text="Расчитать" Command="{Binding EvaluateSigmaCommand}" ></Button>
+            <Label Text="{Binding Sigma}"/>
+            <Label Text="{Binding Lambda}"/>
+            <Label Text="{Binding Gamma}"/>
+            <Label Text="{Binding Alpha}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
