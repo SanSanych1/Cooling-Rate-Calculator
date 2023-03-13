@@ -10,7 +10,13 @@ namespace Cooling_Rate_Calculator.ViewModels
         }
 
         [ObservableProperty] private string title = string.Empty;
+        [ObservableProperty] private string marking = string.Empty;
+        
+        #region ElementsProperties
 
+        /// <summary>
+        /// Элементы сплава
+        /// </summary>
         [ObservableProperty] private string carboneum = string.Empty;
         [ObservableProperty] private string niccolum = string.Empty;
         [ObservableProperty] private string cobaltum = string.Empty;
@@ -26,10 +32,46 @@ namespace Cooling_Rate_Calculator.ViewModels
         [ObservableProperty] private string niobium = string.Empty;
         [ObservableProperty] private string zirconium = string.Empty;
 
+        #endregion
+
+        #region Sigma, Lambda, Gamma, Alpha, Liquidus
+        
         [ObservableProperty] private double sigma;
         [ObservableProperty] private double lambda;
         [ObservableProperty] private double gamma;
         [ObservableProperty] private double alpha;
+        [ObservableProperty] private double liquidus;
+
+        #endregion
+
+
+
+        #region Commands
+        [RelayCommand]
+        void DecodeMark()
+        {
+            Marking = "10ХС3НД8";
+            var tmp = "";
+            var elements = new List<string>();
+
+            int index = 0;
+            foreach (char sym in Marking)
+            {
+                if (Char.IsDigit(sym))
+                {
+                    tmp += sym;
+                    if (index == Marking.Length - 1)
+                        elements.Add(tmp);
+                }
+                else
+                {
+                    if (tmp.Length != 0)
+                        elements.Add(tmp);
+                    tmp = sym.ToString();
+                }
+                index++;
+            }
+        }
 
         [RelayCommand]
         void ClearFields()
@@ -59,10 +101,12 @@ namespace Cooling_Rate_Calculator.ViewModels
                 Lambda = (1 / 20.0f) * (11 - 7 * Math.Pow(Sigma, 0.25f));
                 Gamma = 0.1f * (55 - 9 * Math.Pow(Sigma, 0.25f));
                 Alpha = Lambda / Gamma;
+                Liquidus =  5*(4*(77-3*double.Parse(Carboneum))-double.Parse(Manganum))-(13*Math.Sqrt(double.Parse(Chromium))+25*Math.Sqrt(double.Parse(Niccolum)))/2-2*(4*double.Parse(Silicium) + double.Parse(Molybdaenum) + double.Parse(Vanadium) + double.Parse(Cobaltum) + double.Parse(Aluminium) + 3*double.Parse(Cuprum) + 7*double.Parse(Titanium) + 9*double.Parse(Niobium))-13*double.Parse(Zirconium);
             } catch (Exception e) {
                 Console.Error.WriteLine(e.ToString());
             }
             
         }
+        #endregion
     }
 }

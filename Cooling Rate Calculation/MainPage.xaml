@@ -8,6 +8,18 @@
              Title="{Binding Title}">
     <ScrollView>
         <VerticalStackLayout Padding="20">
+            <groupBoxView:SfTextInputLayout Grid.Column="0"
+                                                Grid.Row="0"
+                                                Hint="Маркировка"
+                                                Stroke="{StaticResource Primary}"
+                                                ContainerType="Outlined" 
+                                                ContainerBackground="White">
+                <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                    <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                <Entry Text="{Binding Marking}"/>
+            </groupBoxView:SfTextInputLayout>
+            <Button Command="{Binding DecodeMarkCommand}" Text="Decode"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -178,12 +190,19 @@
                     </groupBoxView:SfTextInputLayout>
                 </FlexLayout>
             </Grid>
-            <Button Text="Очистить поля" Command="{Binding ClearFieldsCommand}" ></Button>
+            
             <Button Text="Расчитать" Command="{Binding EvaluateSigmaCommand}" ></Button>
-            <Label Text="{Binding Sigma}"/>
+            <Button Text="Очистить поля" Command="{Binding ClearFieldsCommand}" ></Button>
+            <Label Text="Sigma" />
+            <Label Text="{Binding Sigma}" />
+            <Label Text="Lambda"/>
             <Label Text="{Binding Lambda}"/>
+            <Label Text="Gamma"/>
             <Label Text="{Binding Gamma}"/>
+            <Label Text="Alpha"/>
             <Label Text="{Binding Alpha}"/>
+            <Label Text="Liquidus"/>
+            <Label Text="{Binding Liquidus}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
