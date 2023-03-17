@@ -1,41 +1,43 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Linq;
 
 namespace Cooling_Rate_Calculator.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public MainViewModel() {
+        public MainViewModel()
+        {
 
         }
 
         [ObservableProperty] private string title = string.Empty;
-        [ObservableProperty] private string marking = string.Empty;
-        
+        [ObservableProperty] private string marking = "10Г2ФБЮ";
+
         #region ElementsProperties
 
         /// <summary>
         /// Элементы сплава
         /// </summary>
-        [ObservableProperty] private string carboneum = string.Empty;
-        [ObservableProperty] private string niccolum = string.Empty;
-        [ObservableProperty] private string cobaltum = string.Empty;
-        [ObservableProperty] private string cuprum = string.Empty;
-        [ObservableProperty] private string wolframium = string.Empty;
-        [ObservableProperty] private string manganum = string.Empty;
-        [ObservableProperty] private string silicium = string.Empty;
-        [ObservableProperty] private string aluminium = string.Empty;
-        [ObservableProperty] private string chromium = string.Empty;
-        [ObservableProperty] private string vanadium = string.Empty;
-        [ObservableProperty] private string titanium = string.Empty;
-        [ObservableProperty] private string molybdaenum = string.Empty;    
-        [ObservableProperty] private string niobium = string.Empty;
-        [ObservableProperty] private string zirconium = string.Empty;
+        [ObservableProperty] private double carboneum;
+        [ObservableProperty] private double niccolum;
+        [ObservableProperty] private double cobaltum;
+        [ObservableProperty] private double cuprum;
+        [ObservableProperty] private double wolframium;
+        [ObservableProperty] private double manganum;
+        [ObservableProperty] private double silicium;
+        [ObservableProperty] private double aluminium;
+        [ObservableProperty] private double chromium;
+        [ObservableProperty] private double vanadium;
+        [ObservableProperty] private double titanium;
+        [ObservableProperty] private double molybdaenum;
+        [ObservableProperty] private double niobium;
+        [ObservableProperty] private double zirconium;
 
         #endregion
 
         #region Sigma, Lambda, Gamma, Alpha, Liquidus
-        
+
         [ObservableProperty] private double sigma;
         [ObservableProperty] private double lambda;
         [ObservableProperty] private double gamma;
@@ -44,20 +46,75 @@ namespace Cooling_Rate_Calculator.ViewModels
 
         #endregion
 
+        #region Functions
 
+        double EvaluateSigma()
+        {
+            return ((Carboneum + (Niccolum + Cobaltum + Cuprum + Wolframium / 3.0d) / 5.0d) / 3.0d +
+                    Manganum / 14.0d +
+                    (Silicium + Aluminium) / 7.0d +
+                    (Chromium + Vanadium + Titanium) / 13.0d +
+                    (Molybdaenum + Niobium + Zirconium) / 24.0d) / 4;
+        }
+
+        double EvaluateLambda()
+        {
+            return (11 - 7 * Math.Pow(Sigma, 0.25d)) / 20.0d;
+        }
+
+        double EvaluateGamma()
+        {
+            return (55 - 9 * Math.Pow(Sigma, 0.25f)) / 10.0d;
+        }
+
+        double EvaluateAlpha()
+        {
+            return Lambda / Gamma;
+        }
+
+        double EvaluateLiquidus()
+        {
+            return  5 * (4 * (77 - 3 * Carboneum) - Manganum) - 
+                    (13 * Math.Sqrt(Chromium) + 25 * Math.Sqrt(Niccolum)) / 2 - 
+                    2 * (4 * Silicium + Molybdaenum + Vanadium + Cobaltum + Aluminium + 3 * Cuprum + 7 * Titanium + 9 * Niobium) - 
+                    13 * Zirconium;
+        }
+
+        #endregion
 
         #region Commands
+        
+        [RelayCommand]
+        void ClearFields()
+        {
+            Carboneum = 0;
+            Niccolum = 0;
+            Cobaltum = 0;
+            Cuprum = 0;
+            Wolframium = 0;
+            Manganum = 0;
+            Silicium = 0;
+            Aluminium = 0;
+            Chromium = 0;
+            Vanadium = 0;
+            Titanium = 0;
+            Molybdaenum = 0;
+            Niobium = 0;
+            Zirconium = 0;
+        }
+
         [RelayCommand]
         void DecodeMark()
         {
-            Marking = "10ХС3НД8";
+            ClearFields();
+
             var tmp = "";
             var elements = new List<string>();
 
             int index = 0;
             foreach (char sym in Marking)
             {
-                if (Char.IsDigit(sym))
+                if (char.IsDigit(sym))
                 {
                     tmp += sym;
                     if (index == Marking.Length - 1)
@@ -71,42 +128,82 @@ namespace Cooling_Rate_Calculator.ViewModels
                 }
                 index++;
             }
+            
+            index = 0;
+
+            foreach (string elem in elements)
+            { 
+                double _carboneum = 0;
+                if(index == 0 && double.TryParse(elem, out _carboneum))
+                    Carboneum = _carboneum / 100; 
+                else
+                {
+                    double persent;
+                    if (elem.Length == 1)
+                        persent = 1;
+                    else
+                        persent = double.Parse(elem.Substring(1, elem.Length-1));
+
+
+                    switch (char.ToUpper(elem[0]))
+                    {
+                        case 'Н':
+                            Niccolum = persent;
+                            break;
+                        case 'К':
+                            Cobaltum = persent;
+                            break;
+                        case 'Д':
+                            Cuprum = persent;
+                            break;
+                        case 'В':
+                            Wolframium = persent;
+                            break;
+                        case 'Г':
+                            Manganum = persent;
+                            break;
+                        case 'С':
+                            Silicium = persent;
+                            break;
+                        case 'Ю':
+                            Aluminium = persent;
+                            break;
+                        case 'Х':
+                            Chromium = persent;
+                            break;
+                        case 'Ф':
+                            Vanadium = persent;
+                            break;
+                        case 'Т':
+                            Titanium = persent;
+                            break;
+                        case 'М':
+                            Molybdaenum = persent;
+                            break;
+                        case 'Б':
+                            Niobium = persent;
+                            break;
+                        case 'Ц':
+                            Zirconium = persent;
+                            break;
+
+                    }
+                }
+                
+                index++;
+            }
         }
 
         [RelayCommand]
-        void ClearFields()
+        void Evaluate()
         {
-            Carboneum = string.Empty;
-            Niccolum = string.Empty;
-            Cobaltum = string.Empty;
-            Cuprum = string.Empty;
-            Wolframium = string.Empty;
-            Manganum = string.Empty;
-            Silicium = string.Empty;
-            Aluminium = string.Empty;
-            Chromium = string.Empty;
-            Vanadium = string.Empty;  
-            Titanium = string.Empty;
-            Molybdaenum = string.Empty;
-            Niobium = string.Empty;
-            Zirconium = string.Empty;
+            Sigma = EvaluateSigma();
+            Lambda = EvaluateLambda();
+            Gamma = EvaluateGamma();
+            Alpha = EvaluateAlpha();
+            Liquidus = EvaluateLiquidus();
         }
 
-
-        [RelayCommand] 
-        void EvaluateSigma() {
-            try
-            {
-                Sigma = 0.25f * (1 / 3.0f * (double.Parse(Carboneum) + (0.2f) * (double.Parse(Niccolum) + double.Parse(Cobaltum) + double.Parse(Cuprum) + double.Parse(Wolframium) / 3.0f)) + double.Parse(Manganum) / 14.0f + (double.Parse(Silicium) + double.Parse(Aluminium)) / 7.0f + (double.Parse(Chromium) + double.Parse(Vanadium) + double.Parse(Titanium)) / 13.0f + (double.Parse(Molybdaenum) + double.Parse(Niobium) + double.Parse(Zirconium)) / 24.0f);
-                Lambda = (1 / 20.0f) * (11 - 7 * Math.Pow(Sigma, 0.25f));
-                Gamma = 0.1f * (55 - 9 * Math.Pow(Sigma, 0.25f));
-                Alpha = Lambda / Gamma;
-                Liquidus =  5*(4*(77-3*double.Parse(Carboneum))-double.Parse(Manganum))-(13*Math.Sqrt(double.Parse(Chromium))+25*Math.Sqrt(double.Parse(Niccolum)))/2-2*(4*double.Parse(Silicium) + double.Parse(Molybdaenum) + double.Parse(Vanadium) + double.Parse(Cobaltum) + double.Parse(Aluminium) + 3*double.Parse(Cuprum) + 7*double.Parse(Titanium) + 9*double.Parse(Niobium))-13*double.Parse(Zirconium);
-            } catch (Exception e) {
-                Console.Error.WriteLine(e.ToString());
-            }
-            
-        }
         #endregion
     }
 }

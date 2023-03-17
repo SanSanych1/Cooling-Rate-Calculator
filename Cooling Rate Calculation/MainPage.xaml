@@ -7,19 +7,29 @@
              x:DataType="viewModel:MainViewModel"
              Title="{Binding Title}">
     <ScrollView>
+        <ScrollView.Style>
+            <Style TargetType="ScrollView">
+                <Setter Property="Background" Value="{StaticResource White}"/>
+            </Style>
+        </ScrollView.Style>
         <VerticalStackLayout Padding="20">
-            <groupBoxView:SfTextInputLayout Grid.Column="0"
-                                                Grid.Row="0"
-                                                Hint="Маркировка"
+            <groupBoxView:SfTextInputLayout Hint="Маркировка"
+                                                HeightRequest="100"
                                                 Stroke="{StaticResource Primary}"
                                                 ContainerType="Outlined" 
                                                 ContainerBackground="White">
                 <groupBoxView:SfTextInputLayout.HintLabelStyle>
                     <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                 </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                <Entry Text="{Binding Marking}"/>
+                <FlexLayout Direction="Row" AlignContent="Center" JustifyContent="Center">
+                    <Entry FlexLayout.Grow="1" Text="{Binding Marking}"/>
+                    <Button Command="{Binding ClearFieldsCommand}" 
+                                Text="✕"/>
+                </FlexLayout>
             </groupBoxView:SfTextInputLayout>
-            <Button Command="{Binding DecodeMarkCommand}" Text="Decode"/>
+
+
+            <Button Margin="0,0,0,20" Command="{Binding DecodeMarkCommand}" Text="Decode"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -173,9 +183,9 @@
                                                 Stroke="{StaticResource Primary}"
                                                 ContainerType="Outlined" 
                                                 ContainerBackground="White">
-                            <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                                <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                            </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
                         <Entry Text="{Binding Niobium}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
                     <groupBoxView:SfTextInputLayout 
@@ -190,9 +200,9 @@
                     </groupBoxView:SfTextInputLayout>
                 </FlexLayout>
             </Grid>
-            
-            <Button Text="Расчитать" Command="{Binding EvaluateSigmaCommand}" ></Button>
-            <Button Text="Очистить поля" Command="{Binding ClearFieldsCommand}" ></Button>
+
+            <Button Text="Расчитать" Command="{Binding EvaluateCommand}" ></Button>
+            <Button Text="Очистить поля" Command="{Binding }" ></Button>
             <Label Text="Sigma" />
             <Label Text="{Binding Sigma}" />
             <Label Text="Lambda"/>
