@@ -13,6 +13,8 @@ namespace Cooling_Rate_Calculator.ViewModels
 
         [ObservableProperty] private string title = string.Empty;
         [ObservableProperty] private string marking = "10Г2ФБЮ";
+        [ObservableProperty] private bool isElementsVisible = false;
+        [ObservableProperty] private bool isOtherFieldsVisible = false;
 
         #region ElementsProperties
 
@@ -202,6 +204,20 @@ namespace Cooling_Rate_Calculator.ViewModels
             Gamma = EvaluateGamma();
             Alpha = EvaluateAlpha();
             Liquidus = EvaluateLiquidus();
+        }
+
+        [RelayCommand]
+        void HideElements()
+        {
+            IsOtherFieldsVisible = false;
+            IsElementsVisible = !IsElementsVisible;
+        }
+
+        [RelayCommand]
+        void HideOtherFields()
+        {
+            IsOtherFieldsVisible = !IsOtherFieldsVisible;
+            IsElementsVisible = false;
         }
 
         #endregion
