@@ -22,15 +22,13 @@
                     <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                 </groupBoxView:SfTextInputLayout.HintLabelStyle>
                 <FlexLayout Direction="Row" AlignContent="Center" JustifyContent="Center">
-                    <Entry FlexLayout.Grow="1" Text="{Binding Marking}"/>
+                    <Entry FlexLayout.Grow="1" Text="{Binding Marking}" Placeholder="Введите маркировку сплава"/>
                     <Button Command="{Binding ClearFieldsCommand}" 
                                 Text="✕"/>
                 </FlexLayout>
             </groupBoxView:SfTextInputLayout>
 
-
-            <Button Margin="0,0,0,20" Command="{Binding DecodeMarkCommand}" Text="Decode"/>
-            <Button Margin="0,0,0,20" Command="{Binding HideElementsCommand}" Text="Hide"/>
+            <Button Margin="0,0,0,20" Command="{Binding HideElementsCommand}" Text="{Binding HideElementsButtonText}"/>
 
             <Frame BorderColor="{StaticResource Primary}"
                    CornerRadius="10"
@@ -209,7 +207,7 @@
                 </Grid>
             </Frame>
 
-            <Button Margin="0,0,0,20" Command="{Binding HideOtherFieldsCommand}" Text="Other fields"/>
+            <Button Margin="0,0,0,20" Command="{Binding HideOtherFieldsCommand}" Text="{Binding HideOtherFieldsButtonText}"/>
 
             <Frame BorderColor="{StaticResource Primary}"
                    CornerRadius="10"
@@ -218,6 +216,11 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -236,7 +239,7 @@
                         <groupBoxView:SfTextInputLayout.HintLabelStyle>
                             <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                         </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                        <Entry Text="{Binding ThicknessOfWeldedSheets}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
                     <groupBoxView:SfTextInputLayout Grid.Row="1"
                                                     Hint="Температура наименьшей устойчивости аустенита"
@@ -246,9 +249,19 @@
                         <groupBoxView:SfTextInputLayout.HintLabelStyle>
                             <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                         </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                        <Entry Text="{Binding TemperatureMinOfAustenite}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
                     <groupBoxView:SfTextInputLayout Grid.Row="2"
+                                                    Hint="Температура подогрева"
+                                                    Stroke="{StaticResource Primary}"
+                                                    ContainerType="Outlined" 
+                                                    ContainerBackground="White">
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Text="{Binding TemperatureHeating}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                    <groupBoxView:SfTextInputLayout Grid.Row="3"
                                                     Hint="Скорость сварки"
                                                     Stroke="{StaticResource Primary}"
                                                     ContainerType="Outlined" 
@@ -256,9 +269,9 @@
                         <groupBoxView:SfTextInputLayout.HintLabelStyle>
                             <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                         </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                        <Entry Text="{Binding WeldingSpeed}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="3"
+                    <groupBoxView:SfTextInputLayout Grid.Row="4"
                                                     Hint="Напряжение"
                                                     Stroke="{StaticResource Primary}"
                                                     ContainerType="Outlined" 
@@ -266,9 +279,9 @@
                         <groupBoxView:SfTextInputLayout.HintLabelStyle>
                             <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                         </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                        <Entry Text="{Binding Voltage}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="4"
+                    <groupBoxView:SfTextInputLayout Grid.Row="5"
                                                     Hint="Сила тока"
                                                     Stroke="{StaticResource Primary}"
                                                     ContainerType="Outlined" 
@@ -276,9 +289,39 @@
                         <groupBoxView:SfTextInputLayout.HintLabelStyle>
                             <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                         </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                        <Entry Text="{Binding CurrentStrength}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="5"
+                    <groupBoxView:SfTextInputLayout Grid.Row="6"
+                                                    Hint="Тепловая мощность дуги"
+                                                    Stroke="{StaticResource Primary}"
+                                                    ContainerType="Outlined" 
+                                                    ContainerBackground="White">
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Text="{Binding ThermalPowerOfTheArc}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                    <groupBoxView:SfTextInputLayout Grid.Row="7"
+                                                    Hint="Погонная энергия сварки"
+                                                    Stroke="{StaticResource Primary}"
+                                                    ContainerType="Outlined" 
+                                                    ContainerBackground="White">
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Text="{Binding HeatInputOfWelding}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                    <groupBoxView:SfTextInputLayout Grid.Row="8"
+                                                    Hint="Диаметр электрода"
+                                                    Stroke="{StaticResource Primary}"
+                                                    ContainerType="Outlined" 
+                                                    ContainerBackground="White">
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Text="{Binding ElectrodeDiameter}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                    <groupBoxView:SfTextInputLayout Grid.Row="9"
                                                     Hint="Удельная теплоемкость"
                                                     Stroke="{StaticResource Primary}"
                                                     ContainerType="Outlined" 
@@ -286,7 +329,17 @@
                         <groupBoxView:SfTextInputLayout.HintLabelStyle>
                             <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
                         </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
+                        <Entry Text="{Binding SpecificHeat}" MaxLength="10"/>
+                    </groupBoxView:SfTextInputLayout>
+                    <groupBoxView:SfTextInputLayout Grid.Row="10"
+                                                    Hint="Плотность вещества"
+                                                    Stroke="{StaticResource Primary}"
+                                                    ContainerType="Outlined" 
+                                                    ContainerBackground="White">
+                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
+                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
+                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
+                        <Entry Text="{Binding MatterDensity}" MaxLength="10"/>
                     </groupBoxView:SfTextInputLayout>
                 </Grid>
             </Frame>
@@ -301,6 +354,9 @@
             <Label Text="{Binding Alpha}"/>
             <Label Text="Liquidus:"  FontAttributes="Bold"/>
             <Label Text="{Binding Liquidus}"/>
+            <Button Command="{Binding EvaluateCoolingSpeedCommand}" Text="Расчитать скорость охлаждения"/>
+            <Label Text="Cooling Speed:"  FontAttributes="Bold"/>
+            <Label Text="{Binding CoolingSpeed}"/>
 
         </VerticalStackLayout>
     </ScrollView>

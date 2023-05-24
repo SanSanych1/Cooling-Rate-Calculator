@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Android.Locations;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Linq;
+using static Android.Renderscripts.ScriptGroup;
 
 namespace Cooling_Rate_Calculator.ViewModels
 {
@@ -12,9 +14,58 @@ namespace Cooling_Rate_Calculator.ViewModels
         }
 
         [ObservableProperty] private string title = string.Empty;
-        [ObservableProperty] private string marking = "10Г2ФБЮ";
-        [ObservableProperty] private bool isElementsVisible = false;
-        [ObservableProperty] private bool isOtherFieldsVisible = false;
+        [ObservableProperty] private string hideElementsButtonText = "Показать элементы";
+        [ObservableProperty] private string hideOtherFieldsButtonText = "Показать другие поля";
+
+        private string marking = "10Г2ФБЮ";
+        public string Marking
+        {
+            get
+            {
+                return marking;
+            }
+            set
+            {
+                marking = value;
+                DecodeMark();
+                Evaluate();
+                OnPropertyChanged();
+            }
+        }
+        private bool isElementsVisible = false;
+        public bool IsElementsVisible
+        {
+            get 
+            { 
+                return isElementsVisible; 
+            }
+            set
+            {
+                isElementsVisible = value;
+                if (value)
+                    HideElementsButtonText = "Скрыть элементы";
+                else
+                    HideElementsButtonText = "Показать элементы";
+                OnPropertyChanged();
+            }
+        }
+        private bool isOtherFieldsVisible = false;
+        public bool IsOtherFieldsVisible
+        {
+            get
+            {
+                return isOtherFieldsVisible;
+            }
+            set
+            {
+                isOtherFieldsVisible = value;
+                if (value)
+                    HideOtherFieldsButtonText = "Скрыть другие поля";
+                else
+                    HideOtherFieldsButtonText = "Показать другие поля";
+                OnPropertyChanged();
+            }
+        }
 
         #region ElementsProperties
 
@@ -38,6 +89,22 @@ namespace Cooling_Rate_Calculator.ViewModels
 
         #endregion
 
+        #region OtherFields
+
+        [ObservableProperty] private double thicknessOfWeldedSheets;
+        [ObservableProperty] private double temperatureMinOfAustenite;
+        [ObservableProperty] private double temperatureHeating;
+        [ObservableProperty] private double weldingSpeed;
+        [ObservableProperty] private double voltage;
+        [ObservableProperty] private double currentStrength;
+        [ObservableProperty] private double thermalPowerOfTheArc;
+        [ObservableProperty] private double heatInputOfWelding;
+        [ObservableProperty] private double electrodeDiameter;
+        [ObservableProperty] private double specificHeat;
+        [ObservableProperty] private double matterDensity;
+
+        #endregion
+
         #region Sigma, Lambda, Gamma, Alpha, Liquidus
 
         [ObservableProperty] private double sigma;
@@ -45,6 +112,7 @@ namespace Cooling_Rate_Calculator.ViewModels
         [ObservableProperty] private double gamma;
         [ObservableProperty] private double alpha;
         [ObservableProperty] private double liquidus;
+        [ObservableProperty] private double coolingSpeed;
 
         #endregion
 
@@ -207,10 +275,18 @@ namespace Cooling_Rate_Calculator.ViewModels
         }
 
         [RelayCommand]
+        void EvaluateCoolingSpeed()
+        {
+            CoolingSpeed = 2 * Math.PI * Lambda * Gamma * Math.Pow(TemperatureMinOfAustenite-TemperatureHeating,3)/Math.Pow(HeatInputOfWelding/ WeldingSpeed*ThicknessOfWeldedSheets, 2);
+        }
+
+        [RelayCommand]
         void HideElements()
         {
+            
             IsOtherFieldsVisible = false;
             IsElementsVisible = !IsElementsVisible;
+            
         }
 
         [RelayCommand]
