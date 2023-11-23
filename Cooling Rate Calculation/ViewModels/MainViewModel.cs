@@ -1,8 +1,6 @@
-﻿using Android.Locations;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Linq;
-using static Android.Renderscripts.ScriptGroup;
 
 namespace Cooling_Rate_Calculator.ViewModels
 {
@@ -17,7 +15,7 @@ namespace Cooling_Rate_Calculator.ViewModels
         [ObservableProperty] private string hideElementsButtonText = "Показать элементы";
         [ObservableProperty] private string hideOtherFieldsButtonText = "Показать другие поля";
 
-        private string marking = "10Г2ФБЮ";
+        private string marking = "";
         public string Marking
         {
             get
@@ -27,17 +25,20 @@ namespace Cooling_Rate_Calculator.ViewModels
             set
             {
                 marking = value;
-                DecodeMark();
-                Evaluate();
+                if (value != "")
+                {
+                    DecodeMark();
+                    Evaluate();
+                }
                 OnPropertyChanged();
             }
         }
         private bool isElementsVisible = false;
         public bool IsElementsVisible
         {
-            get 
-            { 
-                return isElementsVisible; 
+            get
+            {
+                return isElementsVisible;
             }
             set
             {
@@ -67,6 +68,29 @@ namespace Cooling_Rate_Calculator.ViewModels
             }
         }
 
+        private bool isMode = false;
+        public bool IsMode
+        {
+            get
+            {
+                return isMode;
+            }
+            set
+            {
+                isMode = value;
+                if (value)
+                {
+                    HideElements();
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(NotIsMode));
+            }
+        }
+        public bool NotIsMode
+        {
+            get { return !isMode; }
+        }
+
         #region ElementsProperties
 
         /// <summary>
@@ -92,24 +116,82 @@ namespace Cooling_Rate_Calculator.ViewModels
         #region OtherFields
 
         [ObservableProperty] private double thicknessOfWeldedSheets;
-        [ObservableProperty] private double temperatureMinOfAustenite;
+        [ObservableProperty] private double temperatureMinOfAustenite = 600;
         [ObservableProperty] private double temperatureHeating;
-        [ObservableProperty] private double weldingSpeed;
-        [ObservableProperty] private double voltage;
-        [ObservableProperty] private double currentStrength;
-        [ObservableProperty] private double thermalPowerOfTheArc;
+        private double weldingSpeed;
+        public double WeldingSpeed
+        { 
+            get { return weldingSpeed; }
+            set { 
+                if(ThermalPowerOfTheArc != 0)
+                    HeatInputOfWelding = ThermalPowerOfTheArc / value;
+                SetProperty(ref weldingSpeed, value);
+                OnPropertyChanged();
+            }
+        }
+        private double voltage;
+        public double Voltage
+        { 
+            get { return voltage; } 
+            set { 
+                voltage = value;
+                ThermalPowerOfTheArc = value * CurrentStrength;
+                OnPropertyChanged();
+            }
+        }
+        private double currentStrength;
+        public double CurrentStrength
+        {
+            get { return currentStrength; }
+            set
+            {
+                currentStrength = value;
+                ThermalPowerOfTheArc = Voltage * value;
+                OnPropertyChanged();
+            }
+        }
+        private double thermalPowerOfTheArc;
+        public double ThermalPowerOfTheArc
+        {
+            get { return thermalPowerOfTheArc; }
+            set
+            {
+                thermalPowerOfTheArc = value;
+                if (value != 0)
+                    HeatInputOfWelding = value / WeldingSpeed;
+                OnPropertyChanged();
+            }
+        }
         [ObservableProperty] private double heatInputOfWelding;
-        [ObservableProperty] private double electrodeDiameter;
         [ObservableProperty] private double specificHeat;
-        [ObservableProperty] private double matterDensity;
 
         #endregion
 
         #region Sigma, Lambda, Gamma, Alpha, Liquidus
-
-        [ObservableProperty] private double sigma;
+        
+        private double sigma;
+        public double Sigma 
+        {
+            get { return sigma; } 
+            set {
+                sigma = value;
+                if (isMode)
+                    Evaluate();
+                OnPropertyChanged();
+            }
+        }
+        private double gamma;
+        public double Gamma 
+        {
+            get { return gamma; } 
+            set {
+                gamma = value;
+                if(isMode)
+                    Evaluate();    
+                OnPropertyChanged();
+            }
+        }
         [ObservableProperty] private double lambda;
-        [ObservableProperty] private double gamma;
         [ObservableProperty] private double alpha;
         [ObservableProperty] private double liquidus;
         [ObservableProperty] private double coolingSpeed;
@@ -150,13 +232,7 @@ namespace Cooling_Rate_Calculator.ViewModels
                     13 * Zirconium;
         }
 
-        #endregion
-
-        #region Commands
-        
-        [RelayCommand]
-        void ClearFields()
-        {
+        void ClearElements() {
             Carboneum = 0;
             Niccolum = 0;
             Cobaltum = 0;
@@ -172,11 +248,21 @@ namespace Cooling_Rate_Calculator.ViewModels
             Niobium = 0;
             Zirconium = 0;
         }
+        #endregion
+
+        #region Commands
+        
+        [RelayCommand]
+        void ClearFields()
+        {
+            Marking = "";
+            ClearElements();
+        }
 
         [RelayCommand]
         void DecodeMark()
         {
-            ClearFields();
+            ClearElements();
 
             var tmp = "";
             var elements = new List<string>();
@@ -196,6 +282,8 @@ namespace Cooling_Rate_Calculator.ViewModels
                         elements.Add(tmp);
                     tmp = sym.ToString();
                 }
+                if(index == Marking.Length-1 && tmp.Length != 0)
+                    elements.Add(tmp);
                 index++;
             }
             
@@ -272,12 +360,13 @@ namespace Cooling_Rate_Calculator.ViewModels
             Gamma = EvaluateGamma();
             Alpha = EvaluateAlpha();
             Liquidus = EvaluateLiquidus();
+            EvaluateCoolingSpeed();
         }
 
         [RelayCommand]
         void EvaluateCoolingSpeed()
         {
-            CoolingSpeed = 2 * Math.PI * Lambda * Gamma * Math.Pow(TemperatureMinOfAustenite-TemperatureHeating,3)/Math.Pow(HeatInputOfWelding/ WeldingSpeed*ThicknessOfWeldedSheets, 2);
+            CoolingSpeed = 2 * Math.PI * Lambda * Gamma * Math.Pow(TemperatureMinOfAustenite-TemperatureHeating,3)/Math.Pow(HeatInputOfWelding/ThicknessOfWeldedSheets, 2);
         }
 
         [RelayCommand]

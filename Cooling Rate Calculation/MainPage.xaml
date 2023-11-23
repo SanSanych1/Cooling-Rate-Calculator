@@ -1,363 +1,568 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:groupBoxView="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              x:Class="Cooling_Rate_Calculation.MainPage"
              xmlns:viewModel="clr-namespace:Cooling_Rate_Calculator.ViewModels"
              x:DataType="viewModel:MainViewModel"
              Title="{Binding Title}">
     <ScrollView>
-        <ScrollView.Style>
-            <Style TargetType="ScrollView">
-                <Setter Property="Background" Value="{StaticResource White}"/>
-            </Style>
-        </ScrollView.Style>
         <VerticalStackLayout Padding="20">
-            <groupBoxView:SfTextInputLayout Hint="Маркировка"
-                                            HeightRequest="100"
-                                            Stroke="{StaticResource Primary}"
-                                            ContainerType="Outlined" 
-                                            ContainerBackground="White">
-                <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                    <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                <FlexLayout Direction="Row" AlignContent="Center" JustifyContent="Center">
-                    <Entry FlexLayout.Grow="1" Text="{Binding Marking}" Placeholder="Введите маркировку сплава"/>
-                    <Button Command="{Binding ClearFieldsCommand}" 
-                                Text="✕"/>
-                </FlexLayout>
-            </groupBoxView:SfTextInputLayout>
+            <StackLayout >
+                <Label Text="Маркировка" 
+                       TranslationX="25" 
+                       TranslationY="14" 
+                       ZIndex="1" 
+                       HorizontalOptions="StartAndExpand"
+                       Padding="5"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                        StrokeThickness="0.8"
+                        IsEnabled="{Binding NotIsMode}"
+                        StrokeShape="RoundRectangle 8"
+                        Padding="12,16"
+                        HorizontalOptions="Fill">
 
-            <Button Margin="0,0,0,20" Command="{Binding HideElementsCommand}" Text="{Binding HideElementsButtonText}"/>
-
-            <Frame BorderColor="{StaticResource Primary}"
-                   CornerRadius="10"
-                   IsVisible="{Binding IsElementsVisible}">
-
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <groupBoxView:SfTextInputLayout Grid.Column="0"
-                                                Grid.Row="0"
-                                                Hint="Углерод"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Carboneum}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="1"
-                                                Grid.Row="0"
-                                                Hint="Никель"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Niccolum}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="2"
-                                                Grid.Row="0"
-                                                Hint="Кобальт"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Cobaltum}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="0"
-                                                Grid.Row="1"
-                                                Hint="Медь"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Cuprum}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="1"
-                                                Grid.Row="1"
-                                                Hint="Вольфрам"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Wolframium}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="2"
-                                                Grid.Row="1"
-                                                Hint="Марганец"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Manganum}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="0"
-                                                Grid.Row="2"
-                                                Hint="Кремний"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Silicium}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="1"
-                                                Grid.Row="2"
-                                                Hint="Аллюминий"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Aluminium}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="2"
-                                                Grid.Row="2"
-                                                Hint="Хром"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Chromium}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="0"
-                                                Grid.Row="3"
-                                                Hint="Ванадий"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Vanadium}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="1"
-                                                Grid.Row="3"
-                                                Hint="Титан"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Titanium}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Column="2"
-                                                Grid.Row="3"
-                                                Hint="Молибден"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Molybdaenum}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <FlexLayout Grid.Row="4"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3">
-                        <groupBoxView:SfTextInputLayout 
-                                                Hint="Ниобий"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                            <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                                <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                            </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <Entry Text="{Binding Niobium}" MaxLength="10"/>
-                        </groupBoxView:SfTextInputLayout>
-                        <groupBoxView:SfTextInputLayout 
-                                                Hint="Цирконий"
-                                                Stroke="{StaticResource Primary}"
-                                                ContainerType="Outlined" 
-                                                ContainerBackground="White">
-                            <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                                <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                            </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <Entry Placeholder = "Zn" Text="{Binding Zirconium}" MaxLength="10"/>
-                        </groupBoxView:SfTextInputLayout>
+                    <FlexLayout>
+                        <Entry FlexLayout.Grow="1"
+                               Text="{Binding Marking}"
+                               Placeholder="Введите маркировку сплава"/>
+                        <Button Text="✕"
+                                Margin="8,0,0,0"
+                                Command="{Binding ClearFieldsCommand}"/>
                     </FlexLayout>
+                </Border>
+            </StackLayout>
+            <StackLayout>
+                <HorizontalStackLayout TranslationX="25" 
+                                       TranslationY="23" 
+                                       ZIndex="1"
+                                       Background="{AppThemeBinding Light=White, Dark=Black}"
+                                       HorizontalOptions="StartAndExpand">
+                    <CheckBox IsChecked="{Binding IsMode}"/>
+                    <Label TranslationY="-2"
+                           VerticalTextAlignment="Center" 
+                           Text="Теплофизические свойства" Margin="0,0,5,0" />
+                </HorizontalStackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                        StrokeThickness="0.8"
+                        StrokeShape="RoundRectangle 8"
+                        Padding="12,16"
+                        IsEnabled="{Binding IsMode}"
+                        HorizontalOptions="Fill">
+                    <VerticalStackLayout>
+                        <Grid RowDefinitions="*,*" ColumnDefinitions="*,8*,2*" RowSpacing="10">
+                            <Label VerticalTextAlignment="Center" 
+                                   HorizontalOptions="Center"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="λ"/>
+                            <Entry Grid.Row="0"
+                                   Grid.Column="1"
+                                   Margin="10,0"
+                                   Text="{Binding Lambda}"
+                                   Placeholder="Введите коэффициент теплопроводности"/>
+                            <Label VerticalTextAlignment="Center" 
+                                   HorizontalOptions="Center"
+                                   Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="кал/см • °C/с"/>
+                            <Label VerticalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="Cγ"/>
+                            <Entry Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="10,0"
+                                   Text="{Binding Gamma}"
+                                   Placeholder="Введите объемную теплоемкость"/>
+                            <Label VerticalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="кал/см³ • °C"/>
+
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </StackLayout>
+            <Button Margin="0,20" IsEnabled="{Binding NotIsMode}" Command="{Binding HideElementsCommand}" Text="{Binding HideElementsButtonText}"/>
+            <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                    StrokeThickness="0.8"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="12,16"
+                    IsVisible="{Binding IsElementsVisible}"
+                    HorizontalOptions="Fill">
+                <Grid ColumnSpacing="5" RowSpacing="5" ColumnDefinitions="*,*,*" RowDefinitions="*,*,*,*,*">
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Углерод" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Carboneum}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Никель" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Niccolum}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="2"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Кобальт" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Cobaltum}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="1"
+                                 TranslationY="-20">
+                        <Label Text="Медь" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Cuprum}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1"
+                                 Grid.Row="1"
+                                 TranslationY="-20">
+                        <Label Text="Вольфрам" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Wolframium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="2"
+                                 Grid.Row="1"
+                                 TranslationY="-20">
+                        <Label Text="Марганец" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Manganum}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="2"
+                                 TranslationY="-20">
+                        <Label Text="Кремний" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Silicium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1"
+                                 Grid.Row="2"
+                                 TranslationY="-20">
+                        <Label Text="Аллюминий" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Aluminium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="2"
+                                 Grid.Row="2"
+                                 TranslationY="-20">
+                        <Label Text="Хром" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Chromium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="3"
+                                 TranslationY="-20">
+                        <Label Text="Ванадий" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Vanadium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1"
+                                 Grid.Row="3"
+                                 TranslationY="-20">
+                        <Label Text="Титан" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Titanium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="2"
+                                 Grid.Row="3"
+                                 TranslationY="-20">
+                        <Label Text="Молибден" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Molybdaenum}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="4"
+                                 Grid.ColumnSpan="3"
+                                 TranslationY="-20"
+                                 Margin="0,0,0,-20">
+                        <Label Text="Ниобий" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="CenterAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Niobium}" FlexLayout.Grow="1"/>
+                                <Label Text="%" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
                 </Grid>
-            </Frame>
+            </Border>
+            <Button Command="{Binding HideOtherFieldsCommand}" Text="{Binding HideOtherFieldsButtonText}"/>
+            <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                    StrokeThickness="0.8"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="12,16"
+                    Margin="0,20,0,0"
+                    IsVisible="{Binding IsOtherFieldsVisible}"
+                    HorizontalOptions="Fill">
+                <FlexLayout Direction="Column">
 
-            <Button Margin="0,0,0,20" Command="{Binding HideOtherFieldsCommand}" Text="{Binding HideOtherFieldsButtonText}"/>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Толщина свариваемых листов" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding ThicknessOfWeldedSheets}" FlexLayout.Grow="1"/>
+                                <Label Text="см" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Температура наименьшей устойч. аустенита" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding TemperatureMinOfAustenite}" FlexLayout.Grow="1"/>
+                                <Label Text="°C" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Температура подогрева" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding TemperatureHeating}" FlexLayout.Grow="1"/>
+                                <Label Text="°C" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Скорость сварки" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding WeldingSpeed}" FlexLayout.Grow="1"/>
+                                <Label Text="см/с" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Напряжение" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding Voltage}" FlexLayout.Grow="1"/>
+                                <Label Text="В" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Сила тока" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding CurrentStrength}" FlexLayout.Grow="1"/>
+                                <Label Text="A" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Тепловая мощность дуги" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding ThermalPowerOfTheArc}" FlexLayout.Grow="1"/>
+                                <Label Text="Дж" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="0"
+                                 Grid.Row="0"
+                                 TranslationY="-20">
+                        <Label Text="Погонная энергия сварки" 
+                               TranslationX="20" 
+                               TranslationY="13" 
+                               ZIndex="1" 
+                               HorizontalOptions="StartAndExpand"
+                               Padding="5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                                StrokeThickness="0.8"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12,16"
+                                HorizontalOptions="Fill">
+                            <FlexLayout>
+                                <Entry Text="{Binding HeatInputOfWelding}" FlexLayout.Grow="1"/>
+                                <Label Text="кал/см" VerticalTextAlignment="Center"/>
+                            </FlexLayout>
+                        </Border>
+                    </StackLayout>
+                </FlexLayout>
+            </Border>
 
-            <Frame BorderColor="{StaticResource Primary}"
-                   CornerRadius="10"
-                   IsVisible="{Binding IsOtherFieldsVisible}">
+            <Button Margin="0,20,0,0" Text="Расчитать скорость охлаждения" Command="{Binding EvaluateCommand}"/>
 
+            <StackLayout>
+                <Label Text="Скорость охлаждения" 
+                       TranslationX="25" 
+                       TranslationY="14" 
+                       ZIndex="1" 
+                       HorizontalOptions="StartAndExpand"
+                       Padding="5"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"
+                        StrokeThickness="0.8"
+                        StrokeShape="RoundRectangle 8"
+                        Padding="12,20"
+                        HorizontalOptions="Fill">
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <groupBoxView:SfTextInputLayout Grid.Row="0"
-                                                    Hint="Толщина свариваемых листов"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding ThicknessOfWeldedSheets}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="1"
-                                                    Hint="Температура наименьшей устойчивости аустенита"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding TemperatureMinOfAustenite}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="2"
-                                                    Hint="Температура подогрева"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding TemperatureHeating}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="3"
-                                                    Hint="Скорость сварки"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding WeldingSpeed}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="4"
-                                                    Hint="Напряжение"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding Voltage}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="5"
-                                                    Hint="Сила тока"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding CurrentStrength}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="6"
-                                                    Hint="Тепловая мощность дуги"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding ThermalPowerOfTheArc}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="7"
-                                                    Hint="Погонная энергия сварки"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding HeatInputOfWelding}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="8"
-                                                    Hint="Диаметр электрода"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding ElectrodeDiameter}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="9"
-                                                    Hint="Удельная теплоемкость"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding SpecificHeat}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                    <groupBoxView:SfTextInputLayout Grid.Row="10"
-                                                    Hint="Плотность вещества"
-                                                    Stroke="{StaticResource Primary}"
-                                                    ContainerType="Outlined" 
-                                                    ContainerBackground="White">
-                        <groupBoxView:SfTextInputLayout.HintLabelStyle>
-                            <groupBoxView:LabelStyle TextColor="{StaticResource Tertiary}"/>
-                        </groupBoxView:SfTextInputLayout.HintLabelStyle>
-                        <Entry Text="{Binding MatterDensity}" MaxLength="10"/>
-                    </groupBoxView:SfTextInputLayout>
-                </Grid>
-            </Frame>
-
-            <Label Text="Sigma:" FontAttributes="Bold"/>
-            <Label Text="{Binding Sigma}" />
-            <Label Text="Lambda:"  FontAttributes="Bold"/>
-            <Label Text="{Binding Lambda}"/>
-            <Label Text="Gamma:"  FontAttributes="Bold"/>
-            <Label Text="{Binding Gamma}"/>
-            <Label Text="Alpha:"  FontAttributes="Bold"/>
-            <Label Text="{Binding Alpha}"/>
-            <Label Text="Liquidus:"  FontAttributes="Bold"/>
-            <Label Text="{Binding Liquidus}"/>
-            <Button Command="{Binding EvaluateCoolingSpeedCommand}" Text="Расчитать скорость охлаждения"/>
-            <Label Text="Cooling Speed:"  FontAttributes="Bold"/>
-            <Label Text="{Binding CoolingSpeed}"/>
-
+                    <FlexLayout>
+                        <Label Text="{Binding CoolingSpeed}"
+                               FontAttributes="Bold"
+                               Margin="5,0,10,0"/>
+                        <Label Text="°C/сек"/>
+                    </FlexLayout>
+                </Border>
+            </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
